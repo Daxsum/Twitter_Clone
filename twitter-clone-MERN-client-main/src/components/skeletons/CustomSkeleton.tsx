@@ -48,7 +48,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const NotificationSkeleton = () => {
   return (
-    <SkeletonTheme color="#374151" highlightColor="#3c4147">
+    <SkeletonTheme baseColor="#374151" highlightColor="#3c4147">
       <div className="flex mb-5 space-x-6">
         <Skeleton circle height={40} width={40} />
         
