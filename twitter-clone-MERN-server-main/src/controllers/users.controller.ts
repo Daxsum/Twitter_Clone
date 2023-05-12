@@ -8,7 +8,7 @@ import { ExtendedRequest } from "@libs/types";
 import Post from "@models/Post";
 import Notification from "@models/Notification";
 
-export const getTopUsersByFollowers = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const getTopUsersByFollowers = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   const users = await User.aggregate([
     {
       $project: {
@@ -20,12 +20,13 @@ export const getTopUsersByFollowers = expressAsyncHandler(async (req: ExtendedRe
     },
     { $sort: { noOfFollowers: -1 } },
     { $limit: 10 },
+
   ]);
 
   res.status(200).json(users);
 });
 
-export const searchUser = expressAsyncHandler(async (req, res) => {
+export const searchUser = expressAsyncHandler<any>(async (req, res) => {
   const q = req.query?.q?.toString();
 
   if (!q) throw new createError.BadRequest("pass the keyword");
@@ -38,14 +39,14 @@ export const searchUser = expressAsyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 
-export const getUserById = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const getUserById = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) throw new createError.NotFound();
   res.json(user);
 });
 
-export const deleteUserById = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const deleteUserById = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   if (req.params.id !== req.user._id.toString()) throw new createError.Unauthorized();
 
   const user = await User.findById(req.params.id);
@@ -59,7 +60,7 @@ export const deleteUserById = expressAsyncHandler(async (req: ExtendedRequest, r
   res.status(200).json({ msg: "User deleted" });
 });
 
-export const updateUserById = expressAsyncHandler(async (req: ExtendedRequest, res: Response) => {
+export const updateUserById = expressAsyncHandler<any>(async (req: ExtendedRequest, res: Response) => {
   const { id } = req.params;
 
   // check auth & if it's his/her own profile
@@ -106,7 +107,7 @@ export const updateUserById = expressAsyncHandler(async (req: ExtendedRequest, r
 // @ api/users/:id/follow
 // @ private
 
-export const toggleFollowUser = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const toggleFollowUser = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   const { id: userTo } = req.params;
   //! 1. add the user to my following list
   // const user = await User.findById(id);
@@ -170,7 +171,7 @@ export const toggleFollowUser = expressAsyncHandler(async (req: ExtendedRequest,
 // @ api/users/:id/followers
 // @ public
 
-export const getFollowersById = expressAsyncHandler(async (req, res) => {
+export const getFollowersById = expressAsyncHandler<any>(async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id).populate("followers");
   if (!user) throw new createError.NotFound("User not found");
@@ -182,7 +183,7 @@ export const getFollowersById = expressAsyncHandler(async (req, res) => {
 // @ api/users/:id/followers
 // @ public
 
-export const getFollowingsById = expressAsyncHandler(async (req: Request, res) => {
+export const getFollowingsById = expressAsyncHandler<any>(async (req: Request, res) => {
   const { id } = req.params;
   console.log("getFollowingsById", { id });
 

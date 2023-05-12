@@ -6,7 +6,8 @@ import Tag from "@models/Tag";
 // @ desc returns top 5 tags sorted by number of posts
 // @ access public
 
-export const getTopTags = expressAsyncHandler(async (req, res) => {
+export const getTopTags = expressAsyncHandler <any>(async (req:any, res:any) => {
+  console.log(req)
   const tags = await Tag.aggregate([
     {
       $project: {
@@ -16,6 +17,7 @@ export const getTopTags = expressAsyncHandler(async (req, res) => {
       },
     },
     { $sort: { length: -1 } },
+
     { $limit: 10 },
   ]);
   // const tags = await Tag.find({}).sort({ totalPosts: -1 }).limit(5);
@@ -27,7 +29,7 @@ export const getTopTags = expressAsyncHandler(async (req, res) => {
 // @ desc get all posts under a tag
 // @ access public
 
-export const getPostsByTag = expressAsyncHandler(async (req, res) => {
+export const getPostsByTag = expressAsyncHandler<any>(async (req:any, res:any)  => {
   const { tag } = req.params;
   const data = await Tag.find({ name: tag }).populate({
     path: "posts",

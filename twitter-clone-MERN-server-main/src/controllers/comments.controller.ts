@@ -12,7 +12,7 @@ import User from "@models/User";
  * @endpoint /api/posts/:id/comments/
  */
 
-export const createComment = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const createComment = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   const authUserId = req.user._id;
 
   const content = req.body.content;
@@ -60,7 +60,7 @@ export const createComment = expressAsyncHandler(async (req: ExtendedRequest, re
  * @endpoint /api/posts/:id/comments"
  */
 
-export const getCommentsByPostId = expressAsyncHandler(async (req, res) => {
+export const getCommentsByPostId = expressAsyncHandler<any>(async (req, res) => {
   const post = await Post.findById(req.params.id).populate("comments.user", "name username");
 
   res.status(200).json(post.comments);

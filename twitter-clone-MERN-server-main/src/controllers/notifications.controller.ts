@@ -5,12 +5,13 @@ import { ExtendedRequest } from "@libs/types";
 import Notification from "@models/Notification";
 import User from "@models/User";
 
+
 /**
  * @method PUT
  * @access Private
  * @description markAsRead
  */
-export const markAsRead = expressAsyncHandler(async (req: ExtendedRequest, res: Response) => {
+export const markAsRead = expressAsyncHandler<any>(async (req: ExtendedRequest, res: Response) => {
   // check if the notification belong to the auth user
 
   await Notification.findByIdAndUpdate(req.params.id, { read: true });
@@ -22,7 +23,7 @@ export const markAsRead = expressAsyncHandler(async (req: ExtendedRequest, res: 
  * @access Private
  * @description get notifications
  */
-export const getNotifications = expressAsyncHandler(async (req: ExtendedRequest, res: Response) => {
+export const getNotifications = expressAsyncHandler<any>(async (req: any, res: any) => {
   const unreadOnly = req.query.unreadOnly !== undefined || req.query.unreadOnly == "true";
   const user = await User.findById(req.user._id).populate({
     path: "notifications",
@@ -49,7 +50,7 @@ export const getNotifications = expressAsyncHandler(async (req: ExtendedRequest,
  * @access Private
  * @description get unread notifications
  */
-export const getUnreadNotifications = expressAsyncHandler(
+export const getUnreadNotifications = expressAsyncHandler<any>(
   async (req: ExtendedRequest, res: Response) => {
     // SampleModel.find( { 'dates.date': { $gte: 'DATE_VALUE' } } )
     const user = await User.findById(req.user._id).populate("notifications", "read");

@@ -12,7 +12,7 @@ const validationFormatter = validationResult.withDefaults({
   },
 });
 
-export const login = expressAsyncHandler(async (req, res, next) => {
+export const login = expressAsyncHandler<any>(async (req, res, next) => {
   passport.authenticate("local", function (err, user, info) {
     if (!user)
       //! ask stack overflow question this throw new Error("message")
@@ -43,7 +43,7 @@ export const me = (req, res) => {
  * @access Private
  * @description Register user
  */
-export const signup = expressAsyncHandler(async (req, res) => {
+export const signup = expressAsyncHandler<any>(async (req, res) => {
   const errors = validationFormatter(req).array();
 
   if (errors.length > 0) {

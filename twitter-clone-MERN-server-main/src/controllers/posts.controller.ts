@@ -16,7 +16,7 @@ import Notification from "@models/Notification";
    @access private | public
  */
 
-export const getFeed = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const getFeed = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   let user: IUser = req.user;
 
   const { page } = req.query;
@@ -61,7 +61,7 @@ export const getFeed = expressAsyncHandler(async (req: ExtendedRequest, res) => 
   });
 });
 
-export const getPostsByUserId = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const getPostsByUserId = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   const { page, uid } = req.query;
   const pageSize = 10;
   const pageNumber = Number(page) || 0;
@@ -87,7 +87,7 @@ export const getPostsByUserId = expressAsyncHandler(async (req: ExtendedRequest,
     pages: Math.ceil(count / pageSize) - 1,
   });
 });
-export const getRandom = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const getRandom = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   const posts = await Post.aggregate([{ $sample: { size: 5 } }]);
   res.json({
     posts,
@@ -100,7 +100,7 @@ export const getRandom = expressAsyncHandler(async (req: ExtendedRequest, res) =
  @access private
  */
 
-export const createPost = expressAsyncHandler(async (req: ExtendedRequest, res, next: NextFunction) => {
+export const createPost = expressAsyncHandler<any>(async (req: ExtendedRequest, res, next: NextFunction) => {
   const { content, tags }: { content: string; tags?: string } = req.body;
 
   const tagsArray = tags && [...new Set(tags.split(","))]; // convert to an array and remove duplicates if the tags are present
@@ -177,7 +177,7 @@ export const createPost = expressAsyncHandler(async (req: ExtendedRequest, res, 
  * @endpoint /api/posts/:id/comments/
  */
 
-export const getPostById = expressAsyncHandler(async (req, res) => {
+export const getPostById = expressAsyncHandler<any>(async (req, res) => {
   const { id } = req.params;
 
   // try {
@@ -197,7 +197,7 @@ export const getPostById = expressAsyncHandler(async (req, res) => {
  * @endpoint api/posts/:id
  */
 
-export const deletePostById = expressAsyncHandler(async (req: ExtendedRequest, res) => {
+export const deletePostById = expressAsyncHandler<any>(async (req: ExtendedRequest, res) => {
   const post = await Post.findById(req.params.id);
 
   if (!post) throw new createError.NotFound();
@@ -214,7 +214,7 @@ export const deletePostById = expressAsyncHandler(async (req: ExtendedRequest, r
   res.status(200).json({ message: "Post removed" });
 });
 
-export const ratePostById = expressAsyncHandler(async (req: ExtendedRequest, res: Response) => {
+export const ratePostById = expressAsyncHandler<any>(async (req: ExtendedRequest, res: Response) => {
   const authUserId = req.user._id;
   const postId = req.params.id;
 
