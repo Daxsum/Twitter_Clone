@@ -113,7 +113,7 @@ const Sidebar = () => {
         <SidebarItem
           Icon={FaGithubAlt}
           text="GitHub"
-          handler={() => window.open("https://github.com/Dey-Sumit/twitter-clone-MERN-client", "_blank")}
+          handler={() => window.open("https://github.com/Daxsum/Twitter_Clone", "_blank")}
         />
 
         {user && <SidebarItem Icon={IoMdLogOut} text="LogOut" handler={handleLogout} />}
